@@ -1,25 +1,15 @@
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
-
+import Booking from "@/components/Booking";
+import MapPlaceholder from "@/components/MapPlaceholder";
 import Image from "next/image";
+
 
 export default function Home() {
   return (
-    <div>
-      <h1>My App</h1>
-      <SignedIn>
-        {/* Mount the UserButton component */}
-        <UserButton />
-      </SignedIn>
-      <SignedOut>
-        {/* Signed out users get sign in button */}
-        <SignInButton />
-      </SignedOut>
+    <div className="container mt-4">
+      <div className="row">
+        <Booking />
+        <MapPlaceholder />
+      </div>
     </div>
   );
 }
