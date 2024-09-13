@@ -1,0 +1,14 @@
+/* AutoCompleteAddress.css */
+
+.address-item {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.address-item:hover {
+  background-color: rgb(251, 223, 223);
+}

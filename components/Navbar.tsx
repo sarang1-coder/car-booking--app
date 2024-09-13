@@ -40,7 +40,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <SignedIn>
+      {/* <SignedIn>
         <UserButton />
       </SignedIn>
       <SignedOut>
@@ -54,7 +54,7 @@ const Navbar = () => {
             cursor: "pointer",
           }}
         />
-      </SignedOut>
+      </SignedOut> */}
     </nav>
   );
 };
