@@ -45,7 +45,6 @@ const AutoCompleteAddress = () => {
           },
         }
       );
-      
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -81,14 +80,9 @@ const AutoCompleteAddress = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted with", { pickupSource, dropoffSource });
-  };
-
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="mb-3">
           <label htmlFor="pickupLocation" className="form-label">
             Pickup Location
@@ -157,10 +151,6 @@ const AutoCompleteAddress = () => {
           </label>
           <input type="datetime-local" className="form-control" id="dateTime" />
         </div>
-
-        <button type="submit" className="btn btn-primary">
-          Book Now
-        </button>
       </form>
     </div>
   );

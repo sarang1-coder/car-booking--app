@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import AutoCompleteAddress from "./AutoCompleteAddress";
 import CarList from "@/data/CarList";
 import Cars from "./Cars";
+import Cards from "./Cards";
 
 const Booking = () => {
   const [screenHeight, setScreenHeight] = useState(0);
@@ -35,6 +36,7 @@ const Booking = () => {
         <h4 className="mb-4">Booking Details</h4>
         <AutoCompleteAddress />
         <Cars />
+        <Cards />
       </div>
     </div>
   );

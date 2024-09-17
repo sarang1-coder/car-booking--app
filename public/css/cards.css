@@ -1,0 +1,26 @@
+.card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border: 1px solid #ddd; /* Light border for card */
+  border-radius: 0.25rem; /* Rounded corners */
+}
+
+.card.selected {
+  border-color: #d6e380;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  object-fit: cover; /* Ensure image covers the container */
+}
+
+.card-body {
+  background-color: #fff; /* White background for card body */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 0.875rem; /* Smaller font size for card title */
+  color: #333; /* Darker text color */
+}
