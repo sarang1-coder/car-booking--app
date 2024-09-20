@@ -1,18 +1,35 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import "../public/css/autocomplete.css";
+import useBookingStore from "../store";
+
 
 const AutoCompleteAddress = () => {
+  const {
+    pickup,
+    drop,
+    setpickup,
+    setdrop,
+    dateTime,
+    setDateTime,
+    setPickupCoords,
+    setDropCoords,
+  } = useBookingStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [userLocation, setUserLocation] = useState<any>();
+
   const [pickupSource, setPickupSource] = useState<string>("");
   const [dropoffSource, setDropoffSource] = useState<string>("");
   const [pickupSuggestions, setPickupSuggestions] = useState<any[]>([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState<any[]>([]);
 
-  //open suggestions only if pickup or dropoff address is selected
+  // Open suggestions only if pickup or dropoff address is selected
   const [isPickupSelected, setIsPickupSelected] = useState<boolean>(false);
   const [isDropoffSelected, setIsDropoffSelected] = useState<boolean>(false);
 
-  //adding debounce effect to limit API call from 1ms
+  // Adding debounce effect to limit API calls
   useEffect(() => {
     const debounceFn = setTimeout(() => {
       if (!isPickupSelected && pickupSource) {
@@ -31,7 +48,7 @@ const AutoCompleteAddress = () => {
     return () => clearTimeout(debounceFn);
   }, [pickupSource, dropoffSource, isPickupSelected, isDropoffSelected]);
 
-  // call API to get suggestions
+  // Call API to get suggestions
   const fetchSuggestions = async (
     query: string,
     type: "pickup" | "dropoff"
@@ -67,89 +84,132 @@ const AutoCompleteAddress = () => {
       }
     }
   };
+
   // Handle address selection
-  const handleAddressClick = (address: string, type: "pickup" | "dropoff") => {
+  const handleAddressClick = (item: any, type: "pickup" | "dropoff") => {
     if (type === "pickup") {
-      setPickupSource(address);
+      setPickupSource(item.place_formatted);
+      setpickup(item.place_formatted);
+      setPickupCoords({ lat: item.lat, lng: item.lon });
       setIsPickupSelected(true);
       setPickupSuggestions([]);
     } else {
-      setDropoffSource(address);
+      setDropoffSource(item.place_formatted);
+      setdrop(item.place_formatted);
+      setDropCoords({ lat: item.lat, lng: item.lon });
       setIsDropoffSelected(true);
       setDropoffSuggestions([]);
     }
   };
 
+  const getuserLocation = () => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setUserLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  };
+
+  useEffect(() => {
+    getuserLocation();
+  }, []);
+
+  console.log("userLocation", userLocation);
+  console.log("pickupSource", pickupSource);
+
+  console.log("dropoffSource", dropoffSource);
+
   return (
-    <div>
+    <div className="container">
       <form>
-        <div className="mb-3">
-          <label htmlFor="pickupLocation" className="form-label">
+        <div className="mb-3 row">
+          <label
+            htmlFor="pickupLocation"
+            className="form-label col-sm-12 col-md-3"
+          >
             Pickup Location
           </label>
-          <input
-            type="text"
-            className="form-control"
-            id="pickupLocation"
-            value={pickupSource}
-            onChange={(e) => {
-              setPickupSource(e.target.value);
-              setIsPickupSelected(false);
-            }}
-          />
-          {pickupSuggestions.length > 0 && !isPickupSelected && (
-            <div className="list-group mt-2">
-              {pickupSuggestions.map((item: any, index: number) => (
-                <button
-                  key={index}
-                  className="address-item"
-                  onClick={() =>
-                    handleAddressClick(item.place_formatted, "pickup")
-                  }
-                >
-                  {item.place_formatted}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="col-sm-12 col-md-9">
+            <input
+              type="text"
+              className="form-control"
+              id="pickupLocation"
+              value={pickupSource}
+              placeholder="Enter pickup location"
+              onChange={(e) => {
+                setPickupSource(e.target.value);
+                setpickup(e.target.value);
+                setIsPickupSelected(false);
+              }}
+              required
+            />
+            {pickupSuggestions.length > 0 && !isPickupSelected && (
+              <div className="list-group mt-2">
+                {pickupSuggestions.map((item: any, index: number) => (
+                  <button
+                    key={index}
+                    className="address-item list-group-item"
+                    onClick={() => handleAddressClick(item, "pickup")}
+                  >
+                    {item.place_formatted}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="dropoffLocation" className="form-label">
+        <div className="mb-3 row">
+          <label
+            htmlFor="dropoffLocation"
+            className="form-label col-sm-12 col-md-3"
+          >
             Dropoff Location
           </label>
-          <input
-            type="text"
-            className="form-control"
-            id="dropoffLocation"
-            value={dropoffSource}
-            onChange={(e) => {
-              setDropoffSource(e.target.value);
-              setIsDropoffSelected(false);
-            }}
-          />
-          {dropoffSuggestions.length > 0 && !isDropoffSelected && (
-            <div className="list-group mt-2">
-              {dropoffSuggestions.map((item: any, index: number) => (
-                <button
-                  key={index}
-                  className="address-item"
-                  onClick={() =>
-                    handleAddressClick(item.place_formatted, "dropoff")
-                  }
-                >
-                  {item.place_formatted}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="col-sm-12 col-md-9">
+            <input
+              type="text"
+              className="form-control"
+              id="dropoffLocation"
+              value={dropoffSource}
+              placeholder="Enter Drop location"
+              onChange={(e) => {
+                setDropoffSource(e.target.value);
+                setdrop(e.target.value);
+                setIsDropoffSelected(false);
+              }}
+              required
+            />
+            {dropoffSuggestions.length > 0 && !isDropoffSelected && (
+              <div className="list-group mt-2">
+                {dropoffSuggestions.map((item: any, index: number) => (
+                  <button
+                    key={index}
+                    className="address-item list-group-item"
+                    onClick={() => handleAddressClick(item, "dropoff")}
+                  >
+                    {item.place_formatted}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="dateTime" className="form-label text-gray-50">
+        <div className="mb-3 row">
+          <label htmlFor="dateTime" className="form-label col-sm-12 col-md-3">
             Date & Time
           </label>
-          <input type="datetime-local" className="form-control" id="dateTime" />
+          <div className="col-sm-12 col-md-9">
+            <input
+              type="datetime-local"
+              className="form-control"
+              id="dateTime"
+              value={dateTime}
+              onChange={(e) => setDateTime(e.target.value)}
+            />
+          </div>
         </div>
       </form>
     </div>

@@ -36,6 +36,7 @@ const Cards: React.FC<PaymentItemProps> = ({ selectedIndex, onSelect }) => {
                   height={100}
                   layout="responsive"
                   className="card-img-top"
+                  style={{ borderRadius: "50%" }}
                 />
               </div>
             </div>

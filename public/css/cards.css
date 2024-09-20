@@ -1,7 +1,18 @@
 .card {
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  border: 1px solid #ddd; /* Light border for card */
-  border-radius: 0.25rem; /* Rounded corners */
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+Image {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
 }
 
 .card.selected {
@@ -10,17 +21,41 @@
 }
 
 .card-img-top {
-  object-fit: cover; /* Ensure image covers the container */
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
 }
 
 .card-body {
-  background-color: #fff; /* White background for card body */
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 }
 
 .card-title {
-  font-size: 0.875rem; /* Smaller font size for card title */
-  color: #333; /* Darker text color */
+  font-size: 0.875rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 90%;
+  }
+
+  .card-title {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    max-width: 100%;
+  }
+
+  .card-title {
+    font-size: 0.65rem;
+  }
 }

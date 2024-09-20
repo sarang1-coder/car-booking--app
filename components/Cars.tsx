@@ -27,7 +27,7 @@ const Cars: React.FC<CarsProps> = ({ selectedIndex, onSelect }) => {
             <div
               className={`car ${selectedIndex === index ? "selected" : ""}`}
               onClick={() => onSelect(index)}
-              style={{ width: "150px" }}
+              style={{ width: "150px", borderRadius: "1rem" }}
             >
               <div className="position-relative" style={{ height: "7rem" }}>
                 <Image

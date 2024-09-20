@@ -11,7 +11,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mx-3">
+    <nav
+      className="navbar navbar-expand-lg navbar-light bg-light mx-3"
+      style={{ margin: 0, padding: 0 }}
+    >
       <a className="navbar-brand" href="#">
         <Image
           src="/logo.png"
@@ -40,21 +43,6 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      {/* <SignedIn>
-        <UserButton />
-      </SignedIn>
-      <SignedOut>
-        <SignInButton
-          style={{
-            backgroundColor: "#007bff",
-            color: "#ffffff",
-            border: "none",
-            padding: "0.5rem 1rem",
-            borderRadius: "0.25rem",
-            cursor: "pointer",
-          }}
-        />
-      </SignedOut> */}
     </nav>
   );
 };
